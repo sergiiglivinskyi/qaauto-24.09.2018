@@ -3,10 +3,10 @@
 ## Download the following components:
 
 
-1. Go to [Jetbrains official site](https://www.jetbrains.com/idea/download/#section=mac){:target="_blank"} and download IntelliJ IDEA app -
+1. Go to <a href="https://www.jetbrains.com/idea/download/#section=mac" target="_blank">Jetbrains official site</a> and download IntelliJ IDEA app -
 Community version.
 
-2. Go to [Oracle official site](http://www.oracle.com/technetwork/java/javase/downloads/index.html){:target="_blank"} and download JDK package:
+2. Go to [Oracle official site](http://www.oracle.com/technetwork/java/javase/downloads/index.html) and download JDK package:
 
     * Click on JDK Download button (latest version can be used)
 
@@ -14,7 +14,7 @@ Community version.
 
 3. Download FireFox Browser and make sure it has the latest version
 
-4. Go to [Geckodriver](https://github.com/mozilla/geckodriver/releases){:target="_blank"} and download the latest version geckodriver
+4. Go to [Geckodriver](https://github.com/mozilla/geckodriver/releases) and download the latest version geckodriver
 
 ## Tools Setup:
 
@@ -28,7 +28,7 @@ Community version.
 
 4. Launch IntelliJ IDEA, create New Project, select Maven, select JDK installed version 
 
-5. Go to [Maven Repository](https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java/3.11.0){:target="_blank"}, then click on 
+5. Go to [Maven Repository](https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java/3.11.0), then click on 
 Maven tab and copy internal text (it is needed for Selenium setup)
 
 6. Paste copied text to pom.xml file (using this file you can configure/install any tools and libraries for your project according to your needs)
