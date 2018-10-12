@@ -36,8 +36,8 @@ public class LoginTest {
         Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Log In or Sign Up", "Title is wrong");
         Assert.assertEquals(signInButton.isDisplayed(), true, "Sign In button is absent");
 
-        emailField.sendKeys("sergii.glivinskyi@gmail.com");
-        passwordField.sendKeys("Tszyus1986@");
+        emailField.sendKeys("autotestserg555@gmail.com");
+        passwordField.sendKeys("Password555@");
         signInButton.click();
 
         Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/feed/", "Home Page URL is wrong");
