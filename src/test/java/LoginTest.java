@@ -42,6 +42,7 @@ public class LoginTest {
     public void successfulLoginTest() {
         webDriver.navigate().to("https://linkedin.com/");
         LoginPage loginPage = new LoginPage(webDriver);
+
         //By userNameLocator = By.xpath("");
         Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/", "Home Page URL is wrong");
         Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Log In or Sign Up", "Title is wrong");
@@ -49,8 +50,13 @@ public class LoginTest {
 
         loginPage.login("autotestserg555@gmail.com", "Password555@");
 
+        HomePage homePage = new HomePage(webDriver);
         Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/feed/", "Home Page URL is wrong");
         Assert.assertEquals(webDriver.getTitle(), "LinkedIn", "Title is wrong");
+        Assert.assertEquals(homePage.getProfileNavItem().isDisplayed(), true, "profileNavItem is not displayed on Login page");
+
+
+        //li[@id='profile-nav-item']
     }
 
     @Test
