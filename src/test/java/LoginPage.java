@@ -9,8 +9,6 @@ public class LoginPage {
     private WebElement emailField;
     private WebElement passwordField;
     private WebElement signInButton;
-    private WebElement alertError;
-    private WebElement passwordError;
 
     public LoginPage(WebDriver webDriver){
         this.webDriver = webDriver;
@@ -29,17 +27,14 @@ public class LoginPage {
         signInButton.click();
     }
 
-    public WebElement getSignInButton(){
-        return signInButton;
+    public boolean isPageLoaded(){
+        return webDriver.getCurrentUrl().equals("https://www.linkedin.com/")
+                && webDriver.getTitle().equals("LinkedIn: Log In or Sign Up")
+                && isSignInButtonDisplayed();
     }
 
-    public WebElement getAlertError(){
-        alertError = webDriver.findElement(By.xpath("//div[@class='alert error']"));
-        return alertError;
-    }
 
-    public WebElement getPasswordError(){
-        passwordError = webDriver.findElement(By.id("session_password-login-error"));
-        return passwordError;
+    public boolean isSignInButtonDisplayed(){
+        return signInButton.isDisplayed();
     }
 }

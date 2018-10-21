@@ -1,12 +1,11 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static java.lang.Thread.sleep;
 
 
 public class LoginTest {
@@ -39,55 +38,95 @@ public class LoginTest {
      * - Close FF browser
      */
     @Test
-    public void successfulLoginTest() {
+    public void successfulLoginTest() throws InterruptedException {
         webDriver.navigate().to("https://linkedin.com/");
         LoginPage loginPage = new LoginPage(webDriver);
-
-        //By userNameLocator = By.xpath("");
-        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/", "Home Page URL is wrong");
-        Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Log In or Sign Up", "Title is wrong");
-        Assert.assertEquals(loginPage.getSignInButton().isDisplayed(), true, "Sign In button is absent");
-
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
         loginPage.login("autotestserg555@gmail.com", "Password555@");
-
         HomePage homePage = new HomePage(webDriver);
-        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/feed/", "Home Page URL is wrong");
-        Assert.assertEquals(webDriver.getTitle(), "LinkedIn", "Title is wrong");
-        Assert.assertEquals(homePage.getProfileNavItem().isDisplayed(), true, "profileNavItem is not displayed on Login page");
-
-
-        //li[@id='profile-nav-item']
+        sleep(3000);
+        Assert.assertTrue(homePage.isPageLoaded(), "Home Page is not loaded");
     }
 
     @Test
-    public void passwordFieldIsEmptyTest() {
+    public void passwordFieldIsEmptyTest() throws InterruptedException {
         webDriver.navigate().to("https://linkedin.com/");
         LoginPage loginPage = new LoginPage(webDriver);
-        //By userNameLocator = By.xpath("");
-        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/", "Home Page URL is wrong");
-        Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Log In or Sign Up", "Title is wrong");
-        Assert.assertEquals(loginPage.getSignInButton().isDisplayed(), true, "Sign In button is absent");
-
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
         loginPage.login("autotestserg555@gmail.com", "");
-
-        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/", "Home Page URL is wrong");
-        Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Log In or Sign Up", "Title is wrong");
-
+        sleep(3000);
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
     }
 
     @Test
-    public void passwordFieldIsIncorrectTest() {
+    public void passwordIsWrongTest() throws InterruptedException {
         webDriver.navigate().to("https://linkedin.com/");
         LoginPage loginPage = new LoginPage(webDriver);
-        //By userNameLocator = By.xpath("");
-        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/", "Home Page URL is wrong");
-        Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Log In or Sign Up", "Title is wrong");
-        Assert.assertEquals(loginPage.getSignInButton().isDisplayed(), true, "Sign In button is absent");
-
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
         loginPage.login("autotestserg555@gmail.com", "test12345");
+        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(webDriver);
+        sleep(3000);
+        Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login Submit Page is not loaded");
+        Assert.assertEquals(loginSubmitPage.alertErrorText(), "There were one or more errors in your submission. Please correct the marked fields below.", "Alert Error message is absent");
+        Assert.assertEquals(loginSubmitPage.passwordErrorText(), "Hmm, that's not the right password. Please try again or request a new one.", "Password Error message is absent");
+    }
 
-        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/uas/login-submit?loginSubmitSource=GUEST_HOME", "Home Page URL is wrong");
-        Assert.assertEquals(loginPage.getAlertError().getText(), "There were one or more errors in your submission. Please correct the marked fields below.", "Alert Error message is absent");
-        Assert.assertEquals(loginPage.getPasswordError().getText(), "Hmm, that's not the right password. Please try again or request a new one.", "Alert Error message is absent");
+    @Test
+    public void passwordHasLessThanSixCharTest() throws InterruptedException {
+        webDriver.navigate().to("https://linkedin.com/");
+        LoginPage loginPage = new LoginPage(webDriver);
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
+        loginPage.login("autotestserg555@gmail.com", "testt");
+        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(webDriver);
+        sleep(3000);
+        Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login Submit Page is not loaded");
+        Assert.assertEquals(loginSubmitPage.alertErrorText(), "There were one or more errors in your submission. Please correct the marked fields below.", "Alert Error message is absent");
+        Assert.assertEquals(loginSubmitPage.passwordErrorText(), "The password you provided must have at least 6 characters.", "Password Error message is absent");
+    }
+
+    @Test
+    public void emailFieldIsEmptyTest() throws InterruptedException {
+        webDriver.navigate().to("https://linkedin.com/");
+        LoginPage loginPage = new LoginPage(webDriver);
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
+        loginPage.login("", "test12");
+        sleep(3000);
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
+    }
+
+    @Test
+    public void allFieldsAreEmptyTest() throws InterruptedException {
+        webDriver.navigate().to("https://linkedin.com/");
+        LoginPage loginPage = new LoginPage(webDriver);
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
+        loginPage.login("", "");
+        sleep(3000);
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
+    }
+
+    @Test
+    public void emailIsWrongTest() throws InterruptedException {
+        webDriver.navigate().to("https://linkedin.com/");
+        LoginPage loginPage = new LoginPage(webDriver);
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
+        loginPage.login("autotest", "test12345");
+        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(webDriver);
+        sleep(3000);
+        Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login Submit Page is not loaded");
+        Assert.assertEquals(loginSubmitPage.alertErrorText(), "There were one or more errors in your submission. Please correct the marked fields below.", "Alert Error message is absent");
+        Assert.assertEquals(loginSubmitPage.emailErrorText(), "Please enter a valid email address.", "Email Error message is absent");
+    }
+
+    @Test
+    public void emailHasLessThanThreeCharTest() throws InterruptedException {
+        webDriver.navigate().to("https://linkedin.com/");
+        LoginPage loginPage = new LoginPage(webDriver);
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
+        loginPage.login("au", "test12345");
+        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(webDriver);
+        sleep(3000);
+        Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login Submit Page is not loaded");
+        Assert.assertEquals(loginSubmitPage.alertErrorText(), "There were one or more errors in your submission. Please correct the marked fields below.", "Alert Error message is absent");
+        Assert.assertEquals(loginSubmitPage.emailErrorText(), "The text you provided is too short (the minimum length is 3 characters, your text contains 2 characters).", "Email Error message is absent");
     }
 }
