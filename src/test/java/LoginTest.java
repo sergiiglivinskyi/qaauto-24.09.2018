@@ -42,8 +42,7 @@ public class LoginTest {
         webDriver.navigate().to("https://linkedin.com/");
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
-        loginPage.login("autotestserg555@gmail.com", "Password555@");
-        HomePage homePage = new HomePage(webDriver);
+        HomePage homePage = loginPage.login("autotestserg555@gmail.com", "Password555@");
         sleep(3000);
         Assert.assertTrue(homePage.isPageLoaded(), "Home Page is not loaded");
     }
