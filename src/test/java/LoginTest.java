@@ -1,5 +1,6 @@
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -19,7 +20,7 @@ public class LoginTest {
 
     @AfterMethod
     public void afterMethod(){
-        webDriver.quit();
+        //webDriver.quit();
     }
 
     /**
@@ -40,9 +41,9 @@ public class LoginTest {
     @Test
     public void successfulLoginTest() throws InterruptedException {
         webDriver.navigate().to("https://linkedin.com/");
-        LoginPage loginPage = new LoginPage(webDriver);
+        LoginPage loginPage = PageFactory.initElements(webDriver, LoginPage.class);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
-        HomePage homePage = loginPage.login("autotestserg555@gmail.com", "Password555@");
+        HomePage homePage = loginPage.login("autotestserg555@gmail.com", "Password555@", HomePage.class);
         sleep(3000);
         Assert.assertTrue(homePage.isPageLoaded(), "Home Page is not loaded");
     }
@@ -50,9 +51,9 @@ public class LoginTest {
     @Test
     public void passwordFieldIsEmptyTest() throws InterruptedException {
         webDriver.navigate().to("https://linkedin.com/");
-        LoginPage loginPage = new LoginPage(webDriver);
+        LoginPage loginPage = PageFactory.initElements(webDriver, LoginPage.class);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
-        loginPage.login("autotestserg555@gmail.com", "");
+        loginPage.login("autotestserg555@gmail.com", "", LoginPage.class);
         sleep(3000);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
     }
@@ -60,10 +61,9 @@ public class LoginTest {
     @Test
     public void passwordIsWrongTest() throws InterruptedException {
         webDriver.navigate().to("https://linkedin.com/");
-        LoginPage loginPage = new LoginPage(webDriver);
+        LoginPage loginPage = PageFactory.initElements(webDriver, LoginPage.class);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
-        loginPage.login("autotestserg555@gmail.com", "test12345");
-        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(webDriver);
+        LoginSubmitPage loginSubmitPage = loginPage.login("autotestserg555@gmail.com", "test12345", LoginSubmitPage.class);
         sleep(3000);
         Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login Submit Page is not loaded");
         Assert.assertEquals(loginSubmitPage.alertErrorText(), "There were one or more errors in your submission. Please correct the marked fields below.", "Alert Error message is absent");
@@ -73,10 +73,9 @@ public class LoginTest {
     @Test
     public void passwordHasLessThanSixCharTest() throws InterruptedException {
         webDriver.navigate().to("https://linkedin.com/");
-        LoginPage loginPage = new LoginPage(webDriver);
+        LoginPage loginPage = PageFactory.initElements(webDriver, LoginPage.class);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
-        loginPage.login("autotestserg555@gmail.com", "testt");
-        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(webDriver);
+        LoginSubmitPage loginSubmitPage = loginPage.login("autotestserg555@gmail.com", "testt", LoginSubmitPage.class);
         sleep(3000);
         Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login Submit Page is not loaded");
         Assert.assertEquals(loginSubmitPage.alertErrorText(), "There were one or more errors in your submission. Please correct the marked fields below.", "Alert Error message is absent");
@@ -86,9 +85,9 @@ public class LoginTest {
     @Test
     public void emailFieldIsEmptyTest() throws InterruptedException {
         webDriver.navigate().to("https://linkedin.com/");
-        LoginPage loginPage = new LoginPage(webDriver);
+        LoginPage loginPage = PageFactory.initElements(webDriver, LoginPage.class);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
-        loginPage.login("", "test12");
+        loginPage.login("", "test12", LoginPage.class);
         sleep(3000);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
     }
@@ -96,9 +95,9 @@ public class LoginTest {
     @Test
     public void allFieldsAreEmptyTest() throws InterruptedException {
         webDriver.navigate().to("https://linkedin.com/");
-        LoginPage loginPage = new LoginPage(webDriver);
+        LoginPage loginPage = PageFactory.initElements(webDriver, LoginPage.class);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
-        loginPage.login("", "");
+        loginPage.login("", "", LoginPage.class);
         sleep(3000);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
     }
@@ -106,10 +105,9 @@ public class LoginTest {
     @Test
     public void emailIsWrongTest() throws InterruptedException {
         webDriver.navigate().to("https://linkedin.com/");
-        LoginPage loginPage = new LoginPage(webDriver);
+        LoginPage loginPage = PageFactory.initElements(webDriver, LoginPage.class);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
-        loginPage.login("autotest", "test12345");
-        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(webDriver);
+        LoginSubmitPage loginSubmitPage = loginPage.login("autotest", "test12345", LoginSubmitPage.class);
         sleep(3000);
         Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login Submit Page is not loaded");
         Assert.assertEquals(loginSubmitPage.alertErrorText(), "There were one or more errors in your submission. Please correct the marked fields below.", "Alert Error message is absent");
@@ -119,10 +117,9 @@ public class LoginTest {
     @Test
     public void emailHasLessThanThreeCharTest() throws InterruptedException {
         webDriver.navigate().to("https://linkedin.com/");
-        LoginPage loginPage = new LoginPage(webDriver);
+        LoginPage loginPage = PageFactory.initElements(webDriver, LoginPage.class);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
-        loginPage.login("au", "test12345");
-        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(webDriver);
+        LoginSubmitPage loginSubmitPage = loginPage.login("au", "test12345", LoginSubmitPage.class);
         sleep(3000);
         Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login Submit Page is not loaded");
         Assert.assertEquals(loginSubmitPage.alertErrorText(), "There were one or more errors in your submission. Please correct the marked fields below.", "Alert Error message is absent");

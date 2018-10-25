@@ -1,23 +1,28 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class LoginSubmitPage {
 
     private WebDriver webDriver;
 
+    @FindBy (xpath = "//a[@class='nav-link']")
     private WebElement signInLink;
+
+    @FindBy (xpath = "//div[@class='alert error']")
     private WebElement alertError;
+
+    @FindBy (xpath = "//span[@id='session_password-login-error']")
     private WebElement passwordError;
+
+    @FindBy (xpath = "//span[@id='session_key-login-error']")
     private WebElement emailError;
 
     public LoginSubmitPage(WebDriver webDriver){
         this.webDriver = webDriver;
-        initElements();
-    }
-
-    private void initElements(){
-        signInLink = webDriver.findElement(By.xpath("//a[@class='nav-link']"));
+        PageFactory.initElements(webDriver, this);
     }
 
     public boolean isSignInLinkDisplayed(){
@@ -31,17 +36,14 @@ public class LoginSubmitPage {
     }
 
     public String alertErrorText(){
-        alertError = webDriver.findElement(By.xpath("//div[@class='alert error']"));
         return alertError.getText();
     }
 
     public String passwordErrorText(){
-        passwordError = webDriver.findElement(By.id("session_password-login-error"));
         return passwordError.getText();
     }
 
     public String emailErrorText(){
-        emailError = webDriver.findElement(By.xpath("//span[@id='session_key-login-error']"));
         return emailError.getText();
     }
 

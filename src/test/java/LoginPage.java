@@ -22,11 +22,18 @@ public class LoginPage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public HomePage login(String userName, String userPassword){
+//    public HomePage login(String userName, String userPassword){
+//        emailField.sendKeys(userName);
+//        passwordField.sendKeys(userPassword);
+//        signInButton.click();
+//        return new HomePage(webDriver);
+//    }
+
+    public <T> T login(String userName, String userPassword, Class<T> expectedPage){
         emailField.sendKeys(userName);
         passwordField.sendKeys(userPassword);
         signInButton.click();
-        return new HomePage(webDriver);
+        return PageFactory.initElements(webDriver, expectedPage);
     }
 
     public boolean isPageLoaded(){
