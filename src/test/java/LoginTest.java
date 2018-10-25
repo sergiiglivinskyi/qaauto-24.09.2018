@@ -4,6 +4,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static java.lang.Thread.sleep;
@@ -20,7 +21,16 @@ public class LoginTest {
 
     @AfterMethod
     public void afterMethod(){
-        //webDriver.quit();
+        webDriver.quit();
+    }
+
+    @DataProvider
+    public Object[][] validDataProvider() {
+        return new Object[][]{
+                { "autotestserg555@gmail.com", "Password555@"},
+                { "autotestSERG555@gmail.com", "Password555@"},
+                { " autotestSERG555@gmail.com ", "Password555@"}
+        };
     }
 
     /**
@@ -38,12 +48,12 @@ public class LoginTest {
      * Postcondition:
      * - Close FF browser
      */
-    @Test
-    public void successfulLoginTest() throws InterruptedException {
+    @Test(dataProvider = "validDataProvider")
+    public void successfulLoginTest(String userName, String userPassword) throws InterruptedException {
         webDriver.navigate().to("https://linkedin.com/");
         LoginPage loginPage = PageFactory.initElements(webDriver, LoginPage.class);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
-        HomePage homePage = loginPage.login("autotestserg555@gmail.com", "Password555@", HomePage.class);
+        HomePage homePage = loginPage.login(userName, userPassword, HomePage.class);
         sleep(3000);
         Assert.assertTrue(homePage.isPageLoaded(), "Home Page is not loaded");
     }

@@ -36,6 +36,22 @@ public class LoginPage {
         return PageFactory.initElements(webDriver, expectedPage);
     }
 
+//        public <T> T login(String userName, String userPassword){
+//        emailField.sendKeys(userName);
+//        passwordField.sendKeys(userPassword);
+//        signInButton.click();
+//        if(webDriver.getCurrentUrl().contains("/feed")){
+//            return (T) new HomePage(webDriver);
+//        }
+//        if(webDriver.getCurrentUrl().contains("/uas/login-submit")){
+//            return (T) new LoginSubmitPage(webDriver);
+//        }
+//        else{
+//            return (T) new LoginPage(webDriver);
+//        }
+
+//    }
+
     public boolean isPageLoaded(){
         return webDriver.getCurrentUrl().equals("https://www.linkedin.com/")
                 && webDriver.getTitle().equals("LinkedIn: Log In or Sign Up")
