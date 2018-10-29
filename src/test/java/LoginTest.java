@@ -13,10 +13,13 @@ import static java.lang.Thread.sleep;
 public class LoginTest {
 
     WebDriver webDriver;
+    LoginPage loginPage;
 
     @BeforeMethod
     public void beforeMethod(){
         webDriver = new FirefoxDriver();
+        webDriver.navigate().to("https://linkedin.com/");
+        loginPage = PageFactory.initElements(webDriver, LoginPage.class);
     }
 
     @AfterMethod
@@ -69,8 +72,6 @@ public class LoginTest {
      */
     @Test(dataProvider = "validDataProvider")
     public void successfulLoginTest(String userName, String userPassword) throws InterruptedException {
-        webDriver.navigate().to("https://linkedin.com/");
-        LoginPage loginPage = PageFactory.initElements(webDriver, LoginPage.class);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
         HomePage homePage = loginPage.login(userName, userPassword, HomePage.class);
         sleep(3000);
@@ -78,9 +79,7 @@ public class LoginTest {
     }
 
     @Test(dataProvider = "wrongDataProvider")
-    public void wrongDataLoginTest(String userName, String userPassword, String emailErrorText, String passwordErrorText) throws InterruptedException {
-        webDriver.navigate().to("https://linkedin.com/");
-        LoginPage loginPage = PageFactory.initElements(webDriver, LoginPage.class);
+    public void errorMessagesOnInvalidEmailPasswordTest(String userName, String userPassword, String emailErrorText, String passwordErrorText) throws InterruptedException {
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
         LoginSubmitPage loginSubmitPage = loginPage.login(userName, userPassword, LoginSubmitPage.class);
         sleep(3000);
@@ -92,8 +91,6 @@ public class LoginTest {
 
     @Test(dataProvider = "emptyDataProvider")
     public void emptyDataLoginTest(String userName, String userPassword) throws InterruptedException {
-        webDriver.navigate().to("https://linkedin.com/");
-        LoginPage loginPage = PageFactory.initElements(webDriver, LoginPage.class);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
         loginPage.login(userName, userPassword, LoginPage.class);
         sleep(3000);
