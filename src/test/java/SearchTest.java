@@ -43,11 +43,13 @@ public class SearchTest {
 
     @Test
     public void basicSearchTest() throws InterruptedException {
-
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
         HomePage homePage = loginPage.login("autotestserg555@gmail.com", "Password555@", HomePage.class);
-        sleep(3000);
         Assert.assertTrue(homePage.isPageLoaded(), "Home Page is not loaded");
-
+        SearchPage searchPage = homePage.search("HR", SearchPage.class);
+        sleep(5000);
+        Assert.assertTrue(searchPage.isPageLoaded(), "Search Page is not loaded");
+        Assert.assertEquals(searchPage.numberOfSearchResults(), 10, "Search Results does not equals to 10");
+        Assert.assertTrue(searchPage.isSearchTermPresent("HR"), "Search Term does not present");
     }
 }
