@@ -16,6 +16,9 @@ public class SearchPage {
     @FindBy(xpath = "//ul[contains(@class, 'search-results__list')]/li[contains(@class, 'occluded')]")
     private List<WebElement> searchResults;
 
+    @FindBy(xpath = "//header[contains(@class, 'container-with-shadow')]")
+    private WebElement searchBar;
+
     public SearchPage(WebDriver webDriver){
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
@@ -23,11 +26,16 @@ public class SearchPage {
 
     public boolean isPageLoaded(){
         return webDriver.getCurrentUrl().contains("search")
-                && webDriver.getTitle().contains("LinkedIn");
+                && webDriver.getTitle().contains("LinkedIn")
+                && isSearchBarDisplayed();
     }
 
-    public int numberOfSearchResults(){
+    public int getNumberOfSearchResults(){
         return searchResults.size();
+    }
+
+    public boolean isSearchBarDisplayed(){
+        return searchBar.isDisplayed();
     }
 
     public boolean isSearchTermPresent(String searchTerm){

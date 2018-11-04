@@ -17,6 +17,9 @@ public class LoginPage {
     @FindBy(xpath = "//*[@id='login-submit']")
     private WebElement signInButton;
 
+    @FindBy(xpath = "//a[@class='link-forgot-password']")
+    private WebElement forgotPasswordLink;
+
     public LoginPage(WebDriver webDriver){
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
@@ -62,4 +65,16 @@ public class LoginPage {
     public boolean isSignInButtonDisplayed(){
         return signInButton.isDisplayed();
     }
+
+    public RequestPasswordResetPage clickOnForgotPasswordLink(){
+        forgotPasswordLink.click();
+        return PageFactory.initElements(webDriver, RequestPasswordResetPage.class);
+    }
+
+
+
+
+
+
+
 }

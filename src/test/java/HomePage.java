@@ -31,10 +31,10 @@ public class HomePage {
                 && isProfileNavItemDisplayed();
     }
 
-    public <T> T search(String searchTerm, Class<T> expectedPage){
+    public SearchPage search(String searchTerm){
         searchField.sendKeys(searchTerm);
         searchField.sendKeys(Keys.ENTER);
-        return PageFactory.initElements(webDriver, expectedPage);
+        return PageFactory.initElements(webDriver, SearchPage.class);
     }
 
 }
