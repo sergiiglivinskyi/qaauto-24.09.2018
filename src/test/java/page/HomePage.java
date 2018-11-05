@@ -1,13 +1,12 @@
-import org.openqa.selenium.By;
+package page;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class HomePage {
-
-    private WebDriver webDriver;
+public class HomePage extends BasePage{
 
     @FindBy(xpath = "//li[@id='profile-nav-item']")
     private WebElement profileNavItem;
@@ -19,7 +18,6 @@ public class HomePage {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
     }
-
 
     public boolean isProfileNavItemDisplayed(){
         return profileNavItem.isDisplayed();
@@ -36,5 +34,4 @@ public class HomePage {
         searchField.sendKeys(Keys.ENTER);
         return PageFactory.initElements(webDriver, SearchPage.class);
     }
-
 }

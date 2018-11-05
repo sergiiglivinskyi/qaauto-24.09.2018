@@ -1,4 +1,5 @@
-import org.openqa.selenium.By;
+package page;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,11 +26,11 @@ public class LoginPage {
         PageFactory.initElements(webDriver, this);
     }
 
-//    public HomePage login(String userName, String userPassword){
+//    public page.HomePage login(String userName, String userPassword){
 //        emailField.sendKeys(userName);
 //        passwordField.sendKeys(userPassword);
 //        signInButton.click();
-//        return new HomePage(webDriver);
+//        return new page.HomePage(webDriver);
 //    }
 
     public <T> T login(String userName, String userPassword, Class<T> expectedPage){
@@ -44,13 +45,13 @@ public class LoginPage {
 //        passwordField.sendKeys(userPassword);
 //        signInButton.click();
 //        if(webDriver.getCurrentUrl().contains("/feed")){
-//            return (T) new HomePage(webDriver);
+//            return (T) new page.HomePage(webDriver);
 //        }
 //        if(webDriver.getCurrentUrl().contains("/uas/login-submit")){
-//            return (T) new LoginSubmitPage(webDriver);
+//            return (T) new page.LoginSubmitPage(webDriver);
 //        }
 //        else{
-//            return (T) new LoginPage(webDriver);
+//            return (T) new page.LoginPage(webDriver);
 //        }
 
 //    }
@@ -60,7 +61,6 @@ public class LoginPage {
                 && webDriver.getTitle().equals("LinkedIn: Log In or Sign Up")
                 && isSignInButtonDisplayed();
     }
-
 
     public boolean isSignInButtonDisplayed(){
         return signInButton.isDisplayed();

@@ -1,31 +1,16 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.PageFactory;
+package test;
+
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import page.HomePage;
+import page.LoginPage;
+import page.LoginSubmitPage;
 
 import static java.lang.Thread.sleep;
 
 
-public class LoginTest {
-
-    WebDriver webDriver;
-    LoginPage loginPage;
-
-    @BeforeMethod
-    public void beforeMethod(){
-        webDriver = new FirefoxDriver();
-        webDriver.navigate().to("https://linkedin.com/");
-        loginPage = PageFactory.initElements(webDriver, LoginPage.class);
-    }
-
-    @AfterMethod
-    public void afterMethod(){
-        webDriver.quit();
-    }
+public class LoginTest extends BaseTest{
 
     @DataProvider
     public Object[][] validDataProvider() {
