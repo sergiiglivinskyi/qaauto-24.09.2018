@@ -6,9 +6,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import util.GMailService;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RequestPasswordResetPage {
 
     private WebDriver webDriver;
+
+    String link;
 
     @FindBy(xpath = "//button[@class='form__submit']")
     private WebElement findAccountButton;
@@ -47,9 +52,23 @@ public class RequestPasswordResetPage {
 
         String message = gMailService.waitMessage(messageSubject, messageTo, messageFrom, 60);
         System.out.println("Content: " + message);
-
-
+        System.out.println("====================================================");
+        Pattern p = Pattern.compile("href=\"(.*?)\"");
+        Matcher m = p.matcher(message);
+        String url = null;
+        for(int i = 0; i < 3; i++) {
+            if (m.find()) {
+                url = m.group(1);
+            }
+        }
+        link = url.replace("amp;","");
+        System.out.println("Link: " + link);
         return PageFactory.initElements(webDriver, CheckpointPage.class);
+    }
+
+    public PasswordResetPage navigateToLinkFromEmail(){
+        webDriver.navigate().to(link);
+        return PageFactory.initElements(webDriver, PasswordResetPage.class);
     }
 
 

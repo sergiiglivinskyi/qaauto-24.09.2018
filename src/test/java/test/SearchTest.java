@@ -43,19 +43,16 @@ public class SearchTest extends BaseTest {
         sleep(5000);
         Assert.assertTrue(requestPasswordResetPage.isPageLoaded(), "Request Password Reset is not loaded");
         CheckpointPage checkpointPage = requestPasswordResetPage.findAccount("autotestserg555@gmail.com");
-        sleep(5000);
+        sleep(2000);
         Assert.assertTrue(checkpointPage.isPageLoaded(), "Check Point Page is not loaded");
-        sleep(50000);
-        PasswordResetPage passwordResetPage = new PasswordResetPage(webDriver);
+        sleep(10000);
+        PasswordResetPage passwordResetPage = requestPasswordResetPage.navigateToLinkFromEmail();
         Assert.assertTrue(passwordResetPage.isPageLoaded(), "Password Reset Page is not loaded");
         PasswordResetSubmitPage passwordResetSubmitPage = passwordResetPage.resetPassword("Password555@@@", "Password555@@@");
         sleep(5000);
         Assert.assertTrue(passwordResetSubmitPage.isPageLoaded(), "Password Reset Submit Page is not loaded");
         HomePage homePage = passwordResetSubmitPage.clickOnGoToHomeButton();
         Assert.assertTrue(homePage.isPageLoaded(), "Home Page is not loaded");
-
-
-
 
     }
 }
